@@ -1,6 +1,6 @@
 # movie-reco-app
 
-To run the project, choose a directory to mount docker volumes, then compose up.
+To run the project, choose a directory to mount docker volumes, then compose up. If `DOCKER_VOLUMES_DIRECTORY` is not set, a `volumes` directory will be created in the current directory.
 
 ```
 export DOCKER_VOLUMES_DIRECTORY="$HOME/movie-reco-app/volumes"
