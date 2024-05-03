@@ -19,7 +19,7 @@ body = {
 response = requests.post('http://localhost:8058/recommendation', json=body, timeout=20)
 ```
 
-By default it will return the top 5 recommendations, but you can leverage Milvus to do pagination.
+By default it will return the top 5 recommendations, but you can leverage Milvus to do pagination:
 ```python
 body = {
     'model': 'mobilenet',
@@ -30,7 +30,7 @@ body = {
 }
 ```
 
-Currently, the available models are `bert`, `count-vectorizer` and `mobilenet` with respective types `plot`, `plot`, `poster`. A `plot` must be a str of words while a `poster` must be a base64 encoded image.
+Currently, the available models are `bert`, `count-vectorizer` and `mobilenet` with respective types `plot`, `plot` and `poster`. A `plot` must be a text while a `poster` must be a base64 encoded image.
 
 ## link to notebook on interpretability
 

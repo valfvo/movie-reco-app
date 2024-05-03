@@ -30,7 +30,7 @@ services:
       POSTGRES_DB: movies
       PGPORT: 13006
     volumes:
-      - ${DOCKER_VOLUMES_DIRECTORY:-.}/postgres:/var/lib/postgresql/data
+      - ${DOCKER_VOLUMES_DIRECTORY:-./volumes}/postgres:/var/lib/postgresql/data
     ports:
       - "13006:13006"
 
@@ -43,7 +43,7 @@ services:
       - ETCD_QUOTA_BACKEND_BYTES=4294967296
       - ETCD_SNAPSHOT_COUNT=50000
     volumes:
-      - ${DOCKER_VOLUMES_DIRECTORY:-.}/etcd:/etcd
+      - ${DOCKER_VOLUMES_DIRECTORY:-./volumes}/etcd:/etcd
     command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
     healthcheck:
       test: ["CMD", "etcdctl", "endpoint", "health"]
@@ -61,7 +61,7 @@ services:
       - "9001:9001"
       - "9000:9000"
     volumes:
-      - ${DOCKER_VOLUMES_DIRECTORY:-.}/minio:/minio_data
+      - ${DOCKER_VOLUMES_DIRECTORY:-./volumes}/minio:/minio_data
     command: minio server /minio_data --console-address ":9001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -79,7 +79,7 @@ services:
       ETCD_ENDPOINTS: etcd:2379
       MINIO_ADDRESS: minio:9000
     volumes:
-      - ${DOCKER_VOLUMES_DIRECTORY:-.}/milvus:/var/lib/milvus
+      - ${DOCKER_VOLUMES_DIRECTORY:-./volumes}/milvus:/var/lib/milvus
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
       interval: 30s
