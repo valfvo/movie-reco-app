@@ -1,0 +1,17 @@
+FROM mambaorg/micromamba:noble
+
+WORKDIR /movie-reco-app
+EXPOSE 8057
+
+COPY --chown=$MAMBA_USER:$MAMBA_USER env.embedder.yaml /movie-reco-app/env.yaml
+
+RUN micromamba install -y -n base -f /movie-reco-app/env.yaml && \
+    micromamba clean --all --yes
+ARG MAMBA_DOCKERFILE_ACTIVATE=1
+
+RUN mkdir /movie-reco-app/assets
+COPY ./assets/count_vectorizer.joblib /movie-reco-app/assets
+
+COPY ./src/service_embedder.py /movie-reco-app
+
+CMD python service_embedder.py

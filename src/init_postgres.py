@@ -1,5 +1,3 @@
-import asyncio
-
 import pandas as pd
 import psycopg
 
@@ -9,21 +7,36 @@ from sqlalchemy.dialects import postgresql
 
 
 ASSETS_DIR = './assets'
+pg_conn_kwargs = dict(
+    dbname='movies',
+    user='recommender',
+    password='recommender',
+    host='postgres',
+    port=13006,
+    row_factory=dict_row
+)
 
-async def main():
+def init_postgres():
+    pg_conn = psycopg.Connection.connect(**pg_conn_kwargs)
+
+    table_exists = False
+    with pg_conn.cursor() as cur:
+        try:
+            cur.execute('select count(*) from movies')
+            table_exists = True
+        except psycopg.errors.UndefinedTable:
+            pass  # OK, table does not exist
+    pg_conn.close()
+
+    if table_exists:
+        return
+    else:
+        pg_conn = psycopg.Connection.connect(**pg_conn_kwargs)
+
     df = pd.read_pickle(f'{ASSETS_DIR}/movies.pkl.zst')
 
-    pg_conn = await psycopg.AsyncConnection.connect(
-        dbname='movies',
-        user='recommender',
-        password='recommender',
-        host='postgres',
-        port=13006,
-        row_factory=dict_row
-    )
-
-    async with pg_conn.cursor() as cur:
-        await cur.execute(
+    with pg_conn.cursor() as cur:
+        cur.execute(
             """CREATE TABLE movies (
                 id            integer CONSTRAINT movie_id PRIMARY KEY,
                 title         text NOT NULL,
@@ -33,7 +46,7 @@ async def main():
                 poster        bytea
             );"""
         )
-    await pg_conn.commit()
+    pg_conn.commit()
 
     pg_engine = create_engine(
         'postgresql+psycopg://recommender:recommender@postgres:13006/movies'
@@ -50,8 +63,8 @@ async def main():
 
     df.to_sql('movies', pg_engine, index=True, index_label='id', dtype=table_dtype,
               method='multi', chunksize=5000, if_exists='replace')
-    await pg_conn.close()
+    pg_conn.close()
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    init_postgres()

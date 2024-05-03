@@ -86,4 +86,10 @@ async def recommendation(request: RecommendationRequest):
 
 if __name__ == '__main__':
     import uvicorn
+    from init_milvus import init_milvus
+    from init_postgres import init_postgres
+
+    init_postgres()
+    init_milvus()
+
     uvicorn.run(app, host='0.0.0.0', port=8058)

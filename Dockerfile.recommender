@@ -1,0 +1,24 @@
+FROM mambaorg/micromamba:noble
+
+WORKDIR /movie-reco-app
+EXPOSE 8058
+
+COPY --chown=$MAMBA_USER:$MAMBA_USER env.recommender.yaml /movie-reco-app/env.yaml
+
+RUN micromamba install -y -n base -f /movie-reco-app/env.yaml && \
+    micromamba clean --all --yes
+ARG MAMBA_DOCKERFILE_ACTIVATE=1
+
+RUN mkdir /movie-reco-app/assets
+COPY ./assets/plot_ids.npy /movie-reco-app/assets
+COPY ./assets/poster_ids.npy /movie-reco-app/assets
+COPY ./assets/movies.pkl.zst /movie-reco-app/assets
+COPY ./assets/embeddings_cls_bert.safetensors /movie-reco-app/assets
+COPY ./assets/embeddings_count_vectorizer.joblib.gz /movie-reco-app/assets
+COPY ./assets/embeddings_mobilenet.safetensors /movie-reco-app/assets
+
+COPY ./src/init_postgres.py /movie-reco-app
+COPY ./src/init_milvus.py /movie-reco-app
+COPY ./src/service_recommender.py /movie-reco-app
+
+CMD python service_recommender.py
