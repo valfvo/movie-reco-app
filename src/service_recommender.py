@@ -4,6 +4,7 @@ import aiohttp
 import psycopg
 
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from psycopg.rows import dict_row
 from pydantic import BaseModel
 from pymilvus import MilvusClient
@@ -32,6 +33,7 @@ class RecommendationRequest(BaseModel):
 
 app = FastAPI()
 
+app.mount('/webapp', StaticFiles(directory='./webapp'), name='static')
 
 @app.post('/recommendation/')
 async def recommendation(request: RecommendationRequest):

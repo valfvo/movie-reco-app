@@ -1,0 +1,89 @@
+/* App.css */
+.app {
+  font-family: sans-serif;
+  text-align: center;
+  color: #f4edde;
+}
+
+::placeholder {
+  color: #f4edde;
+  opacity: 1; /* Firefox */
+}
+
+.search-bar-container {
+  margin: 20px 0;
+}
+
+.search-bar {
+  padding: 10px;
+  width: 50%;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background-color: #0e1111;
+  color: #f4edde;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.plot-input, .image-upload-container {
+  width: 48%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  height: 150px; /* Adjust as needed */
+  background-color: #0e1111;
+  color: #f4edde;
+}
+
+/* .dropzone {
+  border-radius: 10px;
+  border: 2px dashed #ddd;
+  padding: 20px;
+  cursor: pointer;
+} */
+
+/* App.css continued */
+.recommendations-container {
+  margin: 20px 0;
+}
+
+/* Carousel specific styles */
+.carousel .slide {
+  background: none;
+  border-radius: 10px;
+  min-height: 300px; /* Adjust based on your content */
+}
+
+/* Override the default button styles for carousel */
+.carousel .control-arrow,
+.carousel .control-next.control-arrow,
+.carousel .control-prev.control-arrow {
+  filter: invert(50%);
+}
+
+/* Styles for the buttons/indicators */
+.carousel .control-dots .dot {
+  background: grey;
+  border-radius: 50%;
+}
+
+.uploaded-image {
+  width: 100%; /* Or 'auto' depending on aspect ratio */
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover; /* This will ensure the image covers the area nicely */
+}
+
+/* File Dropzone Styles */
+/* .dropzone {
+  height: 100%; /* Ensure it fills the parent container
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: dashed;
+  border-radius: 10px;
+} */

@@ -12,6 +12,7 @@ ARG MAMBA_DOCKERFILE_ACTIVATE=1
 RUN mkdir /movie-reco-app/assets
 COPY ./assets/plot_ids.npy /movie-reco-app/assets
 COPY ./assets/poster_ids.npy /movie-reco-app/assets
+COPY ./webapp /movie-reco-app/webapp
 
 # COPY ./assets/movies.pkl.zst /movie-reco-app/assets
 # COPY ./assets/embeddings_cls_bert.safetensors /movie-reco-app/assets
