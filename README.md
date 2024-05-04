@@ -32,7 +32,7 @@ body = {
 
 Currently, the available models are `bert`, `count-vectorizer` and `mobilenet` with respective types `plot`, `plot` and `poster`. A `plot` must be a text while a `poster` must be a base64 encoded image.  
 
-Once ready, the web app is available at `http://localhost:8058/webapp/index.html`. The first recommendation from each model may be long (~10s) because the service has to load the model weights in memory.
+Once ready, the web app is available at `http://localhost:8058/webapp/index.html`. The first recommendation from each model may be long (~10s) because the service has to load the model weights in memory. Also the search bar is not functional for the moment.
 
 ## link to notebook on interpretability
 
